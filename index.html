@@ -3,9 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!--Tailwind-->
+     <script src="https://cdn.tailwindcss.com"></script>
+     <script src="https://kit.fontawesome.com/a7b05e6997.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
-<body>
+<body class="bg-amber-50">
+    <!-- ****** Header ****** -->
+    <header>
+        <!-- Navbar-->
+        <nav>
+           <img src="assets/abstract-music-soundwave-banner-design-free-vector.jpg" alt="" class="w-full h-40">
+           <div class="bg-orange-400 w-full h-20 flex justify-around py-6">
+            <div class="flex">
+                <a href="index.html" class="text-slate-100 font-medium text-xs px-2">Home</a>
+                <p class="text-slate-100 px-2 font-medium text-xs">Create job </p>
+            </div>
+            <h1 class="text-sm font-medium text-slate-100">
+                Let the music find you ... <i class="fa-solid fa-music text-slate-100"></i>
+            </h1>
+        </nav>
+    </header>
+    <!-- ****** Main ****** -->
+    <main>
+        <div class="flex">
+            <div class="m-4 w-3/4">
+                <input type="select" class="my-2 border-indigo-900 border rounded">
+                <input type="select" class="my-2 border-indigo-900 border rounded">
+                <input type="select" class="my-2 border-indigo-900 border rounded">
+            </div>
+            <div class="m-4 w-1/4">
+                <button class="border-indigo-900 border rounded m-2 px-2 text-ms">Search</button>
+                <button class="border-indigo-900 border rounded m-2 px-2 text-ms">Clear</button>
+            </div>
+        </div>
+        <div id="renderCard" class="flex justify-around flex-wrap m-4">
+            <div id="spinner" class="hidden animate-bounce w-16 h-16">
+                <img src="/assets/spinner.png" alt="spinner">
+            </div>
+        </div>
+        <div>
+            <div class=" hidden border-y-indigo-900 border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-[url('/assets/fondo.jpg')]">
+                <h2 class="text-center py-2">Job Name</h2>
+                <p class="text-sm py-2"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique eius aut molestias labore officiis, rem commodi. Quisquam eaque quaerat expedita eos, ipsa atque omnis veniam numquam repellat cum illo repellendus.</p>
+                <div class=" text-start text-xs py-2">
+                    <span class="bg-indigo-400 rounded-md">detalles</span>
+                    <span class="bg-indigo-400 rounded-md">detalles</span>
+                    <span class="bg-indigo-400 rounded-md">detalles</span>
+                </div>
+                <button class="bg-orange-400 rounded-md px-2">See details</button>
+            </div>
+        </div>
+        <form action="" class="hidden flex flex-col justify-end my-4 mx-12 bg-[url('/assets/fondo-4.avif')]  bg-cover text-slate-100">
+            <label for="" class=" m-2 text-end">Job Title</label>
+            <input type="text" name="" id="" class=" rounded  m-2 ">
+            <label for="" class=" m-2 text-end">Description</label>
+            <input type="text" name="" id="" class=" rounded  m-2">
+            <label for="" class=" m-2 text-end">Tags</label>
+            <input type="text" class=" rounded  m-2">
+            <input type="text" class=" rounded  m-2">
+            <input type="text" class=" rounded  m-2">
+            <div class="flex flex-wrap justify-end ">
+                <button class="m-2 px-2 rounded bg-slate-100 text-slate-900">Submit</button>
+                <button class="hidden m-2 px-2 rounded bg-slate-100 text-slate-900">Edit</button>
+            </div>  
+        </form>
+    </main>
+    <footer>
+        <div class="bg-indigo-400 mt-20">
+            <span>Information</span>
+        </div>
+    </footer>
+    
     <script src="js/main.js"></script>
 </body>
 </html>
