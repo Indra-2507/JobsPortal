@@ -1,4 +1,58 @@
+// Getting elements from DOM
+const $ = (selector) => document.querySelector(selector)
 
+// Show and hide elements
+const showElement = (selector) => $(selector).classList.remove("hidden")
+const hideElement = (selector) => $(selector).classList.add("hidden")
+const cleanContainer = (selector) => $(selector).innerHTML = ""
+
+const showElements = (selectors) => {
+    for (const selector of selectors){
+        $(selector).classList.remove("hidden")
+    }
+}
+
+const hideElements = (selectors) => {
+    for (const selector of selectors){
+        $(selector).classList.add("hidden")
+    }
+}
+
+//get information
+const getJobs = () => {
+    fetch(`https://6487a592beba62972790de96.mockapi.io/Jobs`)
+        .then(res => res.json())
+        .then(jobs => renderJobs(jobs))
+}
+
+
+const renderJobs = (jobs) => {
+    showElement("#spinner")
+    if (jobs) {
+        //cleanContainer("#characters-container")
+        setTimeout(() => {
+            hideElement("#spinner")
+            for (const { id, name, description, salary, image,location } of jobs) {
+                $("#renderCard").innerHTML += `
+                <div class="border-y-indigo-900 border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-[url('/assets/image.jpg')]">
+                <img src="" alt="">${image}
+                <h2 class="text-center py-2">${name}</h2>
+                <p class="text-sm py-2"> ${description} </p>
+                <div class=" text-start text-xs py-2">
+                    <span class="bg-indigo-400 rounded-md"> ${salary}</span>
+                    <span class="bg-indigo-400 rounded-md"> ${location}</span>
+                </div>
+                <button class="bg-orange-400 rounded-md px-2">See details</button>
+            </div>
+                `
+            }
+        }, 2000)
+    }
+}
+
+window.addEventListener("load", () => {
+    getJobs()
+})
 
 // const jobs=
 // [
