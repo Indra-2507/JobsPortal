@@ -15,9 +15,9 @@
         <nav>
            <img src="assets/abstract-music-soundwave-banner-design-free-vector.jpg" alt="" class="w-full h-40">
            <div class="bg-orange-400 w-full h-20 flex justify-around py-6">
-            <div class="flex">
+            <div id="navbar" class="flex">
                 <a href="index.html" class="text-slate-100 font-medium text-xs px-2">Home</a>
-                <p class="text-slate-100 px-2 font-medium text-xs">Create job </p>
+                <button id="btn-create" class="text-slate-100 px-2 font-medium text-xs">Create job </button>
             </div>
             <h1 class="text-sm font-medium text-slate-100">
                 Let the music find you ... <i class="fa-solid fa-music text-slate-100"></i>
@@ -55,7 +55,7 @@
             </div>
             <div class="m-4 w-1/4">
                 <button id="btn-search" class="border-indigo-900 border rounded m-2 px-2 text-xs">Search</button>
-                <button id="btn-reset" class="border-indigo-900 border rounded m-2 px-2 text-xs">Clear</button>
+                <button type="reset"  class="border-indigo-900 border rounded m-2 px-2 text-xs">Clear</button>
             </div>
         </form>
         <div id="renderCard" class="flex justify-around flex-wrap m-4">
@@ -75,17 +75,59 @@
                 <button id="see-details" class="bg-orange-400 rounded-md px-2">See details</button>
             </div> -->
         </div>
-        <form action="" class="hidden flex flex-col justify-end my-4 mx-12 bg-[url('/assets/fondo-4.avif')]  bg-cover text-slate-100">
-            <label for="" class=" m-2 text-end">Job Title</label>
-            <input type="text" name="" id="" class=" rounded  m-2 ">
-            <label for="" class=" m-2 text-end">Description</label>
-            <input type="text" name="" id="" class=" rounded  m-2">
-            <label for="" class=" m-2 text-end">Tags</label>
-            <input type="text" class=" rounded  m-2">
-            <input type="text" class=" rounded  m-2">
-            <input type="text" class=" rounded  m-2">
+        <form action="" id="new-job" class="hidden flex flex-col justify-end my-4 mx-12 bg-[url('/assets/fondo-4.avif')]  bg-cover text-slate-100">
+            <label for="name" class=" m-2 text-end">Job Title</label>
+            <input type="text" name="name" id="name" class="rounded m-2 text-slate-900">
+            <input type="image" src="" alt="image">
+            <label for="information" class=" m-2 text-end">Information</label>
+            <input type="text" name="information" id="information" class="rounded m-2 text-slate-900">
+            <select id="location" class="my-2 border-indigo-900 border rounded text-xs text-slate-900">
+                <option  value="">Country</option>
+                <option  value="argentina">Argentina</option>
+                <option  value="brasil">Brazil</option>
+                <option  value="ecuador">Ecuador</option>
+                <option  value="chile">Chile</option>
+                <option  value="Uruguay">Uruguay</option>
+            </select>
+            <select id="instrument_type" class="my-2 border-indigo-900 border rounded text-xs text-slate-900">
+                <option  value="">Type of instrument</option>
+                <option  value="string-instruments">String</option>
+                <option  value="percussion-instruments">Percussion</option>
+                <option  value="wind-instruments">Wind</option>
+                <option value="electronic-instruments">Electronic</option>
+                <option value="vocals">Vocals</option>
+            </select>
+            <select id="style" class="my-2 border-indigo-900 border rounded text-xs text-slate-900">
+                <option value="">Type of band</option>
+                <option value="rock">Rock</option>
+                <option value="jazz">Jazz</option>
+                <option value="classical">classical</option>
+                <option value="pop">Pop</option>
+                <option value="blues">Blues</option>
+            </select>
+            
+            <label for="description" class=" m-2 text-end">description</label>
+            <input type="text" name="description" id="description" class="rounded m-2 text-slate-900 ">
+            <div>
+                <p>Benefits</p>
+                <label for="vacations">vacations</label>
+                <input type="text" name="vacations" id="vacations" class="text-slate-900">
+                <label for="costs">costs</label>
+                <input type="text" name="costs" id="costs" class="text-slate-900">
+            </div>
+            <label for="salary">Salary</label>
+            <input type="number" name="salary" id="salary" class="text-slate-900">
+            <label for="long_term">Long term</label>
+            <input type="radio" name="true" id="long_term">True
+            <input type="radio" name="false" id="long_term"> False
+            <div>
+                <p>Instruments</p>
+                <input type="text" name="instrument1" id="instrument1" class="rounded m-2 text-slate-900">
+                <input type="text" name="instrument2" id="instrument2" class="rounded m-2 text-slate-900">
+                <input type="text" name="instrument3" id="instrument3" class="rounded m-2 text-slate-900">
+            </div>
             <div class="flex flex-wrap justify-end ">
-                <button class="m-2 px-2 rounded bg-slate-100 text-slate-900">Submit</button>
+                <button type="submit" class="m-2 px-2 rounded bg-slate-100 text-slate-900">Submit</button>
                 <button class="hidden m-2 px-2 rounded bg-slate-100 text-slate-900">Edit</button>
             </div>  
         </form>

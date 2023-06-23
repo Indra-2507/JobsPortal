@@ -29,10 +29,24 @@ const getJobs = (params) => {
 const getDetails = (jobId) => {
     fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs/${jobId}`)
     .then(res => res.json())
-    .then(jobs => renderJobInformation(jobs))
+    .then(jobs => {
+        renderJobInformation(jobs)
+        
+       // hideElement("#renderCard")
+    })
 }
 
+const newJob =() =>{
+     fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs`, {
+    method: "POST",
+    headers: {
+        'Content-Type': 'Application/json'
+    },
+    body: JSON.stringify(saveJob())
+})
+}
 
+//render functions
 const renderJobs = (jobs) => {
     showElement("#spinner")
     if (jobs) {
@@ -58,10 +72,9 @@ const renderJobs = (jobs) => {
 }
 
 const renderJobInformation = ({name, description, image, benefits, long_term, instruments, salary }) =>{
-    hideElement("#renderCard") 
-    showElement("#spinner")
+        hideElement("#renderCard") 
+        showElement("#spinner")
     setTimeout(() => { 
-        
         hideElement("#spinner")
         showElement("#renderJobInformation")
                 $("#renderJobInformation").innerHTML += `
@@ -78,7 +91,7 @@ const renderJobInformation = ({name, description, image, benefits, long_term, in
                     <span class="bg-indigo-400 rounded-md"> Long term: ${long_term}</span>
                 </div>
                 </div>
-                `
+                    `
     },
     2000)
     }
@@ -95,6 +108,27 @@ const getParams = () => {
     return `?${url}`
 }
 
+//save data
+const saveJob = () => {
+    return {
+        name: $("#name").value,
+        //image: $("#image").value,
+        information: $("#information").value,
+        location: $("#location").value,
+        instrument_type: $("#instrument_type").value,
+        style: $("#style").value,
+        benefits: $("#vacations").value && $("#costs").value,
+        salary : $("#salary").value,
+        long_term: $("#long_term"),
+        instruments : [
+            $("#instrument1"),
+            $("#instrument2"),
+            $("#instrument3")
+        ],
+        description: $("#description").value,
+    }
+}
+
 //actions
 
 $("#btn-search").addEventListener("click", (e) => {
@@ -103,10 +137,16 @@ $("#btn-search").addEventListener("click", (e) => {
     getJobs(url)
 })
 
-$("#btn-reset").addEventListener("click", (e)=>{
-    e.preventDefault()
-    $("#search-form").reset()
+$("#btn-create").addEventListener("click", (e)=>{
+    hideElements(["#btn-create","#search-form", "#renderCard"])
+    showElement("#new-job")
 })
+
+$("#new-job").addEventListener("submit", (e)=>{
+    e.preventDefault()
+    newJob()
+})
+
 
 
 window.addEventListener("load", () => {
@@ -120,7 +160,7 @@ window.addEventListener("load", () => {
 //       "image": "image 1",
 //       "description": "Drummer requiered for Rock band",
 //       "location": "Argentina",
-//       "category": "Musician",
+//       "instrument_type": "Musician",
 //       "style": "Rock"   
 //       "experience": "3 years of experience",
 //       "benefits": {
@@ -141,7 +181,7 @@ window.addEventListener("load", () => {
 //       "image": "image 2",
 //       "description": "Guitarist wanted for Metal band",
 //       "location": "Germany",
-//       "category": "Musician",
+//       "instrument_type": "Musician",
 //       "style": "Rock" 
 //       "experience": "5 years of experience",
 //       "benefits": {
