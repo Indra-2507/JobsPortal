@@ -19,36 +19,95 @@ const hideElements = (selectors) => {
 }
 
 //get information
-const getJobs = () => {
-    fetch(`https://6487a592beba62972790de96.mockapi.io/Jobs`)
+const getJobs = (params) => {
+    //console.log(fetch(`https://6487a592beba62972790de96.mockapi.io/Jobs${params ? `${params}` : ""}`))
+    fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs${params ? `${params}` : ""}`)
         .then(res => res.json())
         .then(jobs => renderJobs(jobs))
+}
+
+const getDetails = (jobId) => {
+    fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs/${jobId}`)
+    .then(res => res.json())
+    .then(jobs => renderJobInformation(jobs))
 }
 
 
 const renderJobs = (jobs) => {
     showElement("#spinner")
     if (jobs) {
-        //cleanContainer("#characters-container")
         setTimeout(() => {
             hideElement("#spinner")
-            for (const { id, name, description, salary, image,location } of jobs) {
+            for (const { id, name, information, style, image,location, category } of jobs) {
                 $("#renderCard").innerHTML += `
                 <div class="border-y-indigo-900 border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-[url('/assets/image.jpg')]">
                 <img src="" alt="">${image}
                 <h2 class="text-center py-2">${name}</h2>
-                <p class="text-sm py-2"> ${description} </p>
+                <p class="text-sm py-2"> ${information} </p>
                 <div class=" text-start text-xs py-2">
-                    <span class="bg-indigo-400 rounded-md"> ${salary}</span>
+                    <span class="bg-indigo-400 rounded-md"> ${style}</span>
                     <span class="bg-indigo-400 rounded-md"> ${location}</span>
+                    <span class="bg-indigo-400 rounded-md"> ${category}</span>
                 </div>
-                <button class="bg-orange-400 rounded-md px-2">See details</button>
+                <button onclick="getDetails('${id}')" class="bg-orange-400 rounded-md px-2">See details</button>
             </div>
                 `
             }
         }, 2000)
     }
 }
+
+const renderJobInformation = ({name, description, image, benefits, long_term, instruments, salary }) =>{
+    hideElement("#renderCard") 
+    showElement("#spinner")
+    setTimeout(() => { 
+        
+        hideElement("#spinner")
+        showElement("#renderJobInformation")
+                $("#renderJobInformation").innerHTML += `
+                <div>
+                <img src="" alt="">${image}
+                <h2 class="text-center py-2">${name}</h2>
+                <p class="text-sm py-2"> ${description} </p>
+                <h3>Benefits</h3>
+                <p class="text-sm py-2 text-green-600"> Vacations: ${benefits.vacations} </p>
+                <p class="text-sm py-2 text-green-600"> Travel costs: ${benefits.costs} </p>
+                <p class="text-sm py-2 text-blue-600"> ${instruments} </p>
+                <div class=" text-start text-xs py-2">
+                    <span class="bg-indigo-400 rounded-md"> Salary :$${salary}</span>
+                    <span class="bg-indigo-400 rounded-md"> Long term: ${long_term}</span>
+                </div>
+                </div>
+                `
+    },
+    2000)
+    }
+
+
+//Filters
+const getParams = () => {
+    const params = {
+        location: $("#country").value,
+        category: $("#instrument").value,
+        style: $("#band").value
+    }
+    const url = new URLSearchParams(params).toString()
+    return `?${url}`
+}
+
+//actions
+
+$("#btn-search").addEventListener("click", (e) => {
+    e.preventDefault()
+    const url = getParams()
+    getJobs(url)
+})
+
+$("#btn-reset").addEventListener("click", (e)=>{
+    e.preventDefault()
+    $("#search-form").reset()
+})
+
 
 window.addEventListener("load", () => {
     getJobs()
@@ -60,12 +119,13 @@ window.addEventListener("load", () => {
 //       "name": "Drummer",
 //       "image": "image 1",
 //       "description": "Drummer requiered for Rock band",
-//       "location": "Argntina",
+//       "location": "Argentina",
 //       "category": "Musician",
+//       "style": "Rock"   
 //       "experience": "3 years of experience",
 //       "benefits": {
 //         "vacations": "3 weeks",
-//         "travel costs": "paid by the company"
+//         "costs": "paid by the company"
 //       },
 //       "salary": 200000,
 //       "long_term": false,
@@ -73,6 +133,7 @@ window.addEventListener("load", () => {
 //         "drummer",
 //         "cymbals"
 //       ],
+//      "descripcion": "excelent clima laboral, trabajo solo los dias viernes y sabados. Banda consolidada"
 //       "id": "1"
 //     },
 //     {
@@ -81,6 +142,7 @@ window.addEventListener("load", () => {
 //       "description": "Guitarist wanted for Metal band",
 //       "location": "Germany",
 //       "category": "Musician",
+//       "style": "Rock" 
 //       "experience": "5 years of experience",
 //       "benefits": {
 //         "vacations": "4 weeks",

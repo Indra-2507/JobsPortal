@@ -26,33 +26,54 @@
     </header>
     <!-- ****** Main ****** -->
     <main>
-        <div class="flex">
+        <form id="search-form" class="flex">
             <div class="m-4 w-3/4">
-                <input type="select" class="my-2 border-indigo-900 border rounded">
-                <input type="select" class="my-2 border-indigo-900 border rounded">
-                <input type="select" class="my-2 border-indigo-900 border rounded">
+                <select id="country" class="my-2 border-indigo-900 border rounded text-xs">
+                <option value="">Country</option>
+                <option value="argentina">Argentina</option>
+                <option value="brasil">Brazil</option>
+                <option value="ecuador">Ecuador</option>
+                <option value="chile">Chile</option>
+                <option value="Uruguay">Uruguay</option>
+            </select>
+                <select id="instrument" class="my-2 border-indigo-900 border rounded text-xs">
+                <option value="">Type of instrument</option>
+                <option value="string-instruments">String</option>
+                <option value="percussion-instruments">Percussion</option>
+                <option value="wind-instruments">Wind</option>
+                <option value="electronic-instruments">Electronic</option>
+                <option value="vocals">Vocals</option>
+            </select>
+                <select id="band" class="my-2 border-indigo-900 border rounded text-xs">
+                    <option value="">Type of band</option>
+                    <option value="rock">Rock</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="classical">classical</option>
+                    <option value="pop">Pop</option>
+                    <option value="blues">Blues</option>
+                </select>
             </div>
             <div class="m-4 w-1/4">
-                <button class="border-indigo-900 border rounded m-2 px-2 text-ms">Search</button>
-                <button class="border-indigo-900 border rounded m-2 px-2 text-ms">Clear</button>
+                <button id="btn-search" class="border-indigo-900 border rounded m-2 px-2 text-xs">Search</button>
+                <button id="btn-reset" class="border-indigo-900 border rounded m-2 px-2 text-xs">Clear</button>
             </div>
-        </div>
+        </form>
         <div id="renderCard" class="flex justify-around flex-wrap m-4">
             <div id="spinner" class="hidden animate-bounce w-16 h-16">
                 <img src="/assets/spinner.png" alt="spinner">
             </div>
         </div>
         <div>
-            <div class=" hidden border-y-indigo-900 border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-[url('/assets/fondo.jpg')]">
-                <h2 class="text-center py-2">Job Name</h2>
+            <div id="renderJobInformation" class="hidden border-y-indigo-900 border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-[url('/assets/fondo.jpg')]">
+                <!-- <h2 class="text-center py-2">Job Name</h2>
                 <p class="text-sm py-2"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique eius aut molestias labore officiis, rem commodi. Quisquam eaque quaerat expedita eos, ipsa atque omnis veniam numquam repellat cum illo repellendus.</p>
                 <div class=" text-start text-xs py-2">
                     <span class="bg-indigo-400 rounded-md">detalles</span>
                     <span class="bg-indigo-400 rounded-md">detalles</span>
                     <span class="bg-indigo-400 rounded-md">detalles</span>
                 </div>
-                <button class="bg-orange-400 rounded-md px-2">See details</button>
-            </div>
+                <button id="see-details" class="bg-orange-400 rounded-md px-2">See details</button>
+            </div> -->
         </div>
         <form action="" class="hidden flex flex-col justify-end my-4 mx-12 bg-[url('/assets/fondo-4.avif')]  bg-cover text-slate-100">
             <label for="" class=" m-2 text-end">Job Title</label>
