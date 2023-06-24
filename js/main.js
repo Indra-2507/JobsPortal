@@ -1,6 +1,6 @@
 // Getting elements from DOM
 const $ = (selector) => document.querySelector(selector)
-
+const $$ = (selector) => document.querySelectorAll(selector)
 // Show and hide elements
 const showElement = (selector) => $(selector).classList.remove("hidden")
 const hideElement = (selector) => $(selector).classList.add("hidden")
@@ -18,6 +18,7 @@ const hideElements = (selectors) => {
     }
 }
 
+let isSubmit = false
 //get information
 const getJobs = (params) => {
     //console.log(fetch(`https://6487a592beba62972790de96.mockapi.io/Jobs${params ? `${params}` : ""}`))
@@ -31,10 +32,21 @@ const getDetails = (jobId) => {
     .then(res => res.json())
     .then(jobs => {
         renderJobInformation(jobs)
-        
-       // hideElement("#renderCard")
     })
 }
+
+const getForm =(jobId = "")=>{
+        fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs/${jobId}`)
+        .then(resp =>resp.json())
+        .then(jobs => {
+            if (jobId === "") {
+                renderJobs(jobs)
+            } else {
+                populateForm(jobs)
+            }
+        })
+    }
+
 
 const newJob =() =>{
      fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs`, {
@@ -45,6 +57,17 @@ const newJob =() =>{
     body: JSON.stringify(saveJob())
 })
 }
+
+const editJob =(jobId)=>{
+        fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs/${jobId}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify(saveJob(jobId))
+        })
+        //.finally(() => window.location.reload())
+    }
 
 //render functions
 const renderJobs = (jobs) => {
@@ -71,8 +94,8 @@ const renderJobs = (jobs) => {
     }
 }
 
-const renderJobInformation = ({name, description, image, benefits, long_term, instruments, salary }) =>{
-        hideElement("#renderCard") 
+const renderJobInformation = ({id, name, description, image, benefits, long_term, instruments, salary }) =>{
+       hideElement("#renderCard") 
         showElement("#spinner")
     setTimeout(() => { 
         hideElement("#spinner")
@@ -90,12 +113,34 @@ const renderJobInformation = ({name, description, image, benefits, long_term, in
                     <span class="bg-indigo-400 rounded-md"> Salary :$${salary}</span>
                     <span class="bg-indigo-400 rounded-md"> Long term: ${long_term}</span>
                 </div>
+                <button id="edit-btn" class="bg-indigo-400" data-id="${id}">Edit</button>
+                <button id="delete-btn" class="bg-red-400" data-id="${id}">Delete</button>
                 </div>
                     `
-    },
+                    $("#edit-btn").addEventListener("click",(e)=>{
+                        e.preventDefault()
+                        hideElement("#renderJobInformation")
+                        showElement("#new-job")
+                        hideElement(".submit-btn")
+                        showElement(".edit-form")
+                        const jobId = $("#edit-btn").getAttribute("data-id")
+                        $(".edit-form").setAttribute("data-id", jobId)
+                        getForm(jobId)
+                        isSubmit = false  
+                    })
+                    $("#delete-btn").addEventListener("click", (e) => {
+                        e.preventDefault()
+                        hideElement("#renderJobInformation")
+                        //showElement("ventana")
+                     // const jobId = $("#delete-btn").getAttribute("data-id")
+                      //$("#delete-btn").setAttribute("data-id", jobId)
+                    })
+    } ,
+   
     2000)
-    }
-
+}
+    
+    
 
 //Filters
 const getParams = () => {
@@ -112,23 +157,39 @@ const getParams = () => {
 const saveJob = () => {
     return {
         name: $("#name").value,
-        //image: $("#image").value,
+        image: $("#image").value,
         information: $("#information").value,
         location: $("#location").value,
         instrument_type: $("#instrument_type").value,
         style: $("#style").value,
         benefits: $("#vacations").value && $("#costs").value,
         salary : $("#salary").value,
-        long_term: $("#long_term"),
+        long_term: $("#long_term").value,
         instruments : [
-            $("#instrument1"),
-            $("#instrument2"),
-            $("#instrument3")
+            $("#instrument1").value,
+            $("#instrument2").value,
+            $("#instrument3").value
         ],
         description: $("#description").value,
     }
 }
 
+const populateForm =({name, image, information, location, instrument_type, style, benefits, salary, long_term, instruments, description})=>{
+        $("#name").value = name
+        $("#image").value = image
+        $("#information").value = information
+        $("#location").value =location
+        $("#instrument_type").value =instrument_type
+        $("#style").value =style
+        $("#vacations").value= benefits
+        $("#costs").value = benefits
+        $("#salary").value = salary
+        $("#long_term").value =long_term
+        $("#instrument1").value = instruments,
+        $("#instrument2").value = instruments,
+        $("#instrument3").value = instruments
+        $("#description").value = description
+}
 //actions
 
 $("#btn-search").addEventListener("click", (e) => {
@@ -140,11 +201,20 @@ $("#btn-search").addEventListener("click", (e) => {
 $("#btn-create").addEventListener("click", (e)=>{
     hideElements(["#btn-create","#search-form", "#renderCard"])
     showElement("#new-job")
+    isSubmit = true
 })
 
 $("#new-job").addEventListener("submit", (e)=>{
     e.preventDefault()
-    newJob()
+    if (isSubmit) {
+        newJob()
+    } else {
+        const jobId = $(".edit-form").getAttribute("data-id")
+        editJob(jobId)
+        hideElement("#new-job")
+        
+    }
+    $("#new-job").reset()
 })
 
 
