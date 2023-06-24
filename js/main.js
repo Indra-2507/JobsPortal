@@ -65,9 +65,14 @@ const editJob =(jobId)=>{
                 'Content-Type': 'Application/json'
             },
             body: JSON.stringify(saveJob(jobId))
-        })
-        //.finally(() => window.location.reload())
+        }).finally(() => window.location.reload())
     }
+
+const deleteJob =(jobId) =>{
+    fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs/${jobId}`, {
+        method: "DELETE"
+    }).finally(() => window.location.reload())
+}
 
 //render functions
 const renderJobs = (jobs) => {
@@ -113,35 +118,15 @@ const renderJobInformation = ({id, name, description, image, benefits, long_term
                     <span class="bg-indigo-400 rounded-md"> Salary :$${salary}</span>
                     <span class="bg-indigo-400 rounded-md"> Long term: ${long_term}</span>
                 </div>
-                <button id="edit-btn" class="bg-indigo-400" data-id="${id}">Edit</button>
-                <button id="delete-btn" class="bg-red-400" data-id="${id}">Delete</button>
+                <button id="edit-btn" onclick="editJobs('${id}')" class="bg-indigo-400" data-id="${id}">Edit</button>
+                <button id="delete-btn" onclick="deleteJobs('${id}')" class="bg-red-400" data-id="${id}">Delete</button>
                 </div>
                     `
-                    $("#edit-btn").addEventListener("click",(e)=>{
-                        e.preventDefault()
-                        hideElement("#renderJobInformation")
-                        showElement("#new-job")
-                        hideElement(".submit-btn")
-                        showElement(".edit-form")
-                        const jobId = $("#edit-btn").getAttribute("data-id")
-                        $(".edit-form").setAttribute("data-id", jobId)
-                        getForm(jobId)
-                        isSubmit = false  
-                    })
-                    $("#delete-btn").addEventListener("click", (e) => {
-                        e.preventDefault()
-                        hideElement("#renderJobInformation")
-                        //showElement("ventana")
-                     // const jobId = $("#delete-btn").getAttribute("data-id")
-                      //$("#delete-btn").setAttribute("data-id", jobId)
-                    })
     } ,
    
     2000)
 }
     
-    
-
 //Filters
 const getParams = () => {
     const params = {
@@ -154,6 +139,30 @@ const getParams = () => {
 }
 
 //save data
+const deleteJobs =()=>{
+    hideElement("#renderJobInformation")
+    showElement("#modal-window")
+    const jobId = $("#delete-btn").getAttribute("data-id")
+    $("#modal-delete").setAttribute("data-id", jobId)
+    modalDelete(jobId)
+   
+}
+const modalDelete=(jobId)=>{
+$("#modal-delete").addEventListener("click", ()=>{
+    deleteJob(jobId)
+    hideElement("#modal-window")
+})
+}
+
+const editJobs= ()=>{
+hideElements(["#renderJobInformation" , ".submit-btn"])
+showElements(["#new-job",".edit-form"])
+    const jobId = $("#edit-btn").getAttribute("data-id")
+    $(".edit-form").setAttribute("data-id", jobId)
+    getForm(jobId)
+    isSubmit = false  
+}  
+
 const saveJob = () => {
     return {
         name: $("#name").value,
@@ -217,7 +226,10 @@ $("#new-job").addEventListener("submit", (e)=>{
     $("#new-job").reset()
 })
 
-
+$("#modal-cancel").addEventListener("click", ()=>{
+    hideElement("#modal-window")
+    window.location.reload()
+})
 
 window.addEventListener("load", () => {
     getJobs()
@@ -243,7 +255,7 @@ window.addEventListener("load", () => {
 //         "drummer",
 //         "cymbals"
 //       ],
-//      "descripcion": "excelent clima laboral, trabajo solo los dias viernes y sabados. Banda consolidada"
+//      "information": "excelent clima laboral, trabajo solo los dias viernes y sabados. Banda consolidada"
 //       "id": "1"
 //     },
 //     {
