@@ -19,10 +19,11 @@ const hideElements = (selectors) => {
 }
 
 let isSubmit = false
+
 //get information
 const getJobs = (params) => {
-    //console.log(fetch(`https://6487a592beba62972790de96.mockapi.io/Jobs${params ? `${params}` : ""}`))
-    fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs${params ? `${params}` : ""}`)
+//console.log(fetch(`https://6487a592beba62972790de96.mockapi.io/Jobs/${params ? `${params}` : ""}`))
+    fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs/?${params  ? `${params}` : ""}`)
         .then(res => res.json())
         .then(jobs => renderJobs(jobs))
 }
@@ -30,9 +31,7 @@ const getJobs = (params) => {
 const getDetails = (jobId) => {
     fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs/${jobId}`)
     .then(res => res.json())
-    .then(jobs => {
-        renderJobInformation(jobs)
-    })
+    .then(jobs => renderJobInformation(jobs))
 }
 
 const getForm =(jobId = "")=>{
@@ -80,16 +79,16 @@ const renderJobs = (jobs) => {
     if (jobs) {
         setTimeout(() => {
             hideElement("#spinner")
-            for (const { id, name, information, style, image,location, category } of jobs) {
+            for (const { id, name, information, style, image,location, instrument } of jobs) {
                 $("#renderCard").innerHTML += `
                 <div class="border-y-indigo-900 border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-[url('/assets/image.jpg')]">
-                <img src="" alt="">${image}
+                <img src="${image}" alt="">
                 <h2 class="text-center py-2">${name}</h2>
                 <p class="text-sm py-2"> ${information} </p>
                 <div class=" text-start text-xs py-2">
                     <span class="bg-indigo-400 rounded-md"> ${style}</span>
                     <span class="bg-indigo-400 rounded-md"> ${location}</span>
-                    <span class="bg-indigo-400 rounded-md"> ${category}</span>
+                    <span class="bg-indigo-400 rounded-md"> ${instrument}</span>
                 </div>
                 <button onclick="getDetails('${id}')" class="bg-orange-400 rounded-md px-2">See details</button>
             </div>
@@ -107,7 +106,7 @@ const renderJobInformation = ({id, name, description, image, benefits, long_term
         showElement("#renderJobInformation")
                 $("#renderJobInformation").innerHTML += `
                 <div>
-                <img src="" alt="">${image}
+                <img src="${image}" alt="">
                 <h2 class="text-center py-2">${name}</h2>
                 <p class="text-sm py-2"> ${description} </p>
                 <h3>Benefits</h3>
@@ -130,12 +129,12 @@ const renderJobInformation = ({id, name, description, image, benefits, long_term
 //Filters
 const getParams = () => {
     const params = {
-        location: $("#country").value,
-        category: $("#instrument").value,
-        style: $("#band").value
+       location: $("#location").value,
+       instrument: $("#instrument").value,
+      style: $("#style").value
     }
     const url = new URLSearchParams(params).toString()
-    return `?${url}`
+    return url
 }
 
 //save data
@@ -168,9 +167,9 @@ const saveJob = () => {
         name: $("#name").value,
         image: $("#image").value,
         information: $("#information").value,
-        location: $("#location").value,
-        instrument_type: $("#instrument_type").value,
-        style: $("#style").value,
+        location: $("#locationform").value,
+        instrument: $("#instrumentform").value,
+        style: $("#styleform").value,
         benefits: $("#vacations").value && $("#costs").value,
         salary : $("#salary").value,
         long_term: $("#long_term").value,
@@ -183,13 +182,13 @@ const saveJob = () => {
     }
 }
 
-const populateForm =({name, image, information, location, instrument_type, style, benefits, salary, long_term, instruments, description})=>{
+const populateForm =({name, image, information, location, instrument, style, benefits, salary, long_term, instruments, description})=>{
         $("#name").value = name
         $("#image").value = image
         $("#information").value = information
-        $("#location").value =location
-        $("#instrument_type").value =instrument_type
-        $("#style").value =style
+        $("#locationForm").value =location
+        $("#instrumentForm").value =instrument
+        $("#styleForm").value =style
         $("#vacations").value= benefits
         $("#costs").value = benefits
         $("#salary").value = salary
@@ -200,6 +199,13 @@ const populateForm =({name, image, information, location, instrument_type, style
         $("#description").value = description
 }
 //actions
+// for (const select of $$("#btn-search")) {
+//     select.addEventListener("click", () => {
+//          const url = getParams()
+//             getJobs(url)
+//         })
+//     }
+
 
 $("#btn-search").addEventListener("click", (e) => {
     e.preventDefault()
@@ -242,7 +248,7 @@ window.addEventListener("load", () => {
 //       "image": "image 1",
 //       "description": "Drummer requiered for Rock band",
 //       "location": "Argentina",
-//       "instrument_type": "Musician",
+//       "instrument": "Musician",
 //       "style": "Rock"   
 //       "experience": "3 years of experience",
 //       "benefits": {
