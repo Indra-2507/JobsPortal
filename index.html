@@ -8,37 +8,37 @@
      <script src="https://kit.fontawesome.com/a7b05e6997.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
-<body class="bg-amber-50">
+<body class="bg-[#f9fad2]">
     <!-- ****** Header ****** -->
     <header>
         <!-- Navbar-->
         <nav>
            <img src="assets/abstract-music-soundwave-banner-design-free-vector.jpg" alt="" class="w-full h-40">
-           <div class="bg-orange-400 w-full h-20 flex justify-around py-6">
-            <div id="navbar" class="flex">
-                <a href="index.html" class="text-slate-100 font-medium text-xs px-2">Home</a>
-                <button id="btn-create" class="text-slate-100 px-2 font-medium text-xs">Create job </button>
+           <div class="bg-[#ff985e] w-full h-20 flex justify-around py-6">
+            <div id="navbar" class="flex justify-center items-center">
+                <a href="index.html" class="text-[#f9fad2] font-medium text-lg px-2 focus:text-[#a2825c]">Home</a>
+                <button id="btn-create" class="text-[#f9fad2] px-2 font-medium text-lg focus:text-[#a2825c]">Create job </button>
             </div>
-            <h1 class="text-sm font-medium text-slate-100">
-                Let the music find you ... <i class="fa-solid fa-music text-slate-100"></i>
+            <h1 class=" font-semibold text-xl text-[#f9fad2] flex self-center">
+                Let the music find you... <i class="fa-solid fa-music text-[#f9fad2] text-xl animate-bounce"></i>
             </h1>
         </nav>
     </header>
     <!-- ****** Main ****** -->
     <main>
         <form id="search-form" class="flex">
-            <div class="m-4 w-3/4">
-                <label for="location">Location</label>
-                <select id="location" class="my-2 border-indigo-900 border rounded text-xs">   
+            <div class="m-4 w-3/4 flex flex-col">
+                <label for="location"  class="text-[#a2825c] font-bold">Location</label>
+                <select onchange="locationfunction()" id="location" class="text-[#a2825c] border rounded m-2">   
                 <option value="">Select an option</option>
                 <option value="argentina">Argentina</option>
-                <option value="brasil">Brazil</option>
-                <option value="ecuador">Ecuador</option>
-                <option value="chile">Chile</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="Chile">Chile</option>
                 <option value="Uruguay">Uruguay</option>
             </select>
-            <label for="instrument">Type of instrument</label>
-                <select id="instrument" class="my-2 border-indigo-900 border rounded text-xs">
+            <label for="instrument" class="text-[#a2825c] font-bold">Type of instrument</label>
+                <select onchange="instrumentfunction()" id="instrument"  class="text-[#a2825c] border rounded m-2">
                 <option value="">Select an option</option>
                 <option value="string">String</option>
                 <option value="percussion">Percussion</option>
@@ -46,83 +46,85 @@
                 <option value="electronic">Electronic</option>
                 <option value="vocals">Vocals</option>
             </select>
-            <label for="style">Style of band</label>
-                <select id="style" class="my-2 border-indigo-900 border rounded text-xs">
+            <label for="style" class="text-[#a2825c] font-bold">Style of band</label>
+                <select onchange="stylefunction()" id="style"  class=" text-[#a2825c] border rounded m-2">
                     <option value="">Select an option</option>
                     <option value="rock">Rock</option>
                     <option value="jazz">Jazz</option>
-                    <option value="classical">classical</option>
+                    <option value="Classical">Classical</option>
                     <option value="pop">Pop</option>
                     <option value="blues">Blues</option>
                 </select>
             </div>
-            <div class="m-4 w-1/4">
-                <button id="btn-search" class="border-indigo-900 border rounded m-2 px-2 text-xs">Search</button>
-                <button type="reset"  class="border-indigo-900 border rounded m-2 px-2 text-xs">Clear</button>
+            <div class="m-4 w-1/4 flex flex-col items-center justify-center"> 
+                <button  id="btn-clear" class="rounded-lg bg-[#88d3ab] m-2 py-2 w-28 font-bold active:bg-[#f5da7a]">Clear<i class="fa-solid fa-broom"></i></button>
             </div>
         </form>
+        <div id="spinner" class="hidden animate-bounce w-20 h-20 mx-auto">
+            <img src="/assets/spinner.png" alt="spinner" class="rounded-full">
+        </div>
+        
         <div id="renderCard" class="flex justify-around flex-wrap m-4">
-            <div id="spinner" class="hidden animate-bounce w-16 h-16">
-                <img src="/assets/spinner.png" alt="spinner">
-            </div>
         </div>
-        <div>
-            <div id="renderJobInformation" class="hidden border-y-indigo-900 border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-[url('/assets/fondo.jpg')]">           
+        <div class="flex ">
+            <div id="renderJobInformation" class="hidden border-2 rounded-lg w-3/4 p-2 bg-repeat mx-auto mt-20 grid grid-rows-1 bg-[url('https://img.freepik.com/vector-gratis/fondo-acuarela-purpura-abstracto_23-2149036193.jpg?size=626&ext=jpg&ga=GA1.1.1739721551.1669313569')] ">           
         </div>
-        <form action="" id="new-job" class="hidden flex flex-col justify-end my-4 mx-12 bg-[url('/assets/fondo-4.avif')]  bg-cover text-slate-100">
-            <label for="name" class=" m-2 text-end">Job Title</label>
-            <input type="text" name="name" id="name" class="rounded m-2 text-slate-900">
-            <input type="url" src="{image}" name="image" id="image" class="w-10 h-10 text-gray-900">   
-            <label for="information" class=" m-2 text-end">Information</label>
-            <input type="text" name="information" id="information" class="rounded m-2 text-slate-900">
-            <select id="locationform" class="my-2 border-indigo-900 border rounded text-xs text-slate-900">
+        <form action="" id="new-job" class="hidden grid grid-cols m-4 p-4 border-double border-8 border-[#408156] shadow-xl shadow[#93a31c]-500/50 bg-[#e5f3ba] mx-auto mt-20 text-[#a2825c]">
+            <label for="name" class="m-2 font-bold">Job Title</label>
+            <input type="text" name="name" id="name" class="rounded m-2">
+            <label for="url" class="m-2 font-bold">Image</label>
+            <input type="url" src="{image}" name="image" id="image" class="rounded m-2">   
+            <label for="information" class=" m-2 font-bold">Information</label>
+            <input type="text" name="information" id="information" class="rounded m-2">
+            <select id="locationForm" class="m-2 border border-[#a2825c] rounded font-bold">
                 <option value="">Country</option>
-                <option value="argentina">Argentina</option>
-                <option value="brasil">Brazil</option>
-                <option value="ecuador">Ecuador</option>
-                <option value="chile">Chile</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="Chile">Chile</option>
                 <option value="Uruguay">Uruguay</option>
             </select>
-            <select id="instrumentform" class="my-2 border-indigo-900 border rounded text-xs text-slate-900">
+            <select id="instrumentForm" class="m-2 border border-[#a2825c] rounded font-bold">
                 <option  value="">Type of instrument</option>
-                <option  value="string">String</option>
-                <option  value="percussion">Percussion</option>
-                <option  value="wind">Wind</option>
-                <option value="electronic">Electronic</option>
-                <option value="vocals">Vocals</option>
+                <option  value="String">String</option>
+                <option  value="Percussion">Percussion</option>
+                <option  value="Wind">Wind</option>
+                <option value="Electronic">Electronic</option>
+                <option value="Vocals">Vocals</option>
             </select>
-            <select id="styleform" class="my-2 border-indigo-900 border rounded text-xs text-slate-900">
+            <select id="styleForm" class="m-2 border border-[#a2825c] rounded font-bold">
                 <option value="">Type of band</option>
-                <option value="rock">Rock</option>
-                <option value="jazz">Jazz</option>
-                <option value="classical">classical</option>
-                <option value="pop">Pop</option>
-                <option value="blues">Blues</option>
+                <option value="Rock">Rock</option>
+                <option value="Jazz">Jazz</option>
+                <option value="Classical">Classical</option>
+                <option value="Pop">Pop</option>
+                <option value="Blues">Blues</option>
             </select>
-            
-            <label for="description" class=" m-2 text-end">description</label>
-            <input type="text" name="description" id="description" class="rounded m-2 text-slate-900 ">
-            <div>
-                <p>Benefits</p>
-                <label for="vacations">vacations</label>
-                <input type="text" name="vacations" id="vacations" class="text-slate-900">
-                <label for="costs">costs</label>
-                <input type="text" name="costs" id="costs" class="text-slate-900">
+            <label for="description" class="m-2 font-bold">Description</label>
+            <input type="text" name="description" id="description" class="rounded m-2">
+            <div class="border border-[#a2825c] m-2 p-4">
+                <p class="font-bold">Benefits</p>
+                <label for="vacations" class="m-2 font-bold">Vacations</label>
+                <input type="text" name="vacations" id="vacations" class="rounded m-2">
+                <label for="costs" class="m-2 font-bold">Costs</label>
+                <input type="text" name="costs" id="costs" class="rounded m-2">
             </div>
-            <label for="salary">Salary</label>
-            <input type="number" name="salary" id="salary" class="text-slate-900">
-            <label for="long_term">Long term</label>
-            <input type="radio" name="true" id="long_term">True
-            <input type="radio" name="false" id="long_term"> False
-            <div>
-                <p>Instruments</p>
-                <input type="text" name="instrument1" id="instrument1" class="rounded m-2 text-slate-900">
-                <input type="text" name="instrument2" id="instrument2" class="rounded m-2 text-slate-900">
-                <input type="text" name="instrument3" id="instrument3" class="rounded m-2 text-slate-900">
+            <label for="salary" class="m-2 rounded font-bold">Salary</label>
+            <input type="number" name="salary" id="salary" class="m-2">
+            <div class="flex items-center flex-wrap my-2 p-4 border border-[#a2825c]">
+                <label for="long_term" class="w-full m-2 font-bold">Long term</label>
+                <input type="radio" name="true" id="long_term" class="mx-4">Yes
+                <input type="radio" name="false" id="long_term" class="mx-4">No
+            </div>
+            <div class="">
+                <label for="instruments" class="m-2 font-bold">Instruments</label>
+                <input type="text" name="instrument1" id="instrument1" class="rounded m-2">
+                <input type="text" name="instrument2" id="instrument2" class="rounded m-2">
+                <input type="text" name="instrument3" id="instrument3" class="rounded m-2">
             </div>
             <div class="flex flex-wrap justify-end ">
-                <button type="submit" class="submit-btn m-2 px-2 rounded bg-slate-100 text-slate-900">Submit</button>
-                <button  class="edit-form hidden m-2 px-2 rounded bg-slate-100 text-slate-900">Edit</button>
+                <button type="submit" class="submit-btn rounded-lg bg-[#408156] m-4 py-2 w-28 font-bold text-[#f9fad2] hover:bg-[#f9fad2] hover:text-[#408156]">Submit <i class="fa-solid fa-arrow-up"></i></button>
+                <button class="hidden edit-form rounded-lg bg-[#f5da7a] m-4 py-2 w-28 font-bold hover:bg-[#a2825c] hover:text-[#f5da7a]">Edit <i class="fa-solid fa-pencil"></i></button>
             </div>  
         </form>
          <!-- Modal Window -->
@@ -156,10 +158,18 @@
       </div>
     </div>
     </main>
-    <footer>
-        <div class="bg-indigo-400 mt-20">
-            <span>Information</span>
+    <!-- ****** Footer ****** -->
+    <footer class="bg-[#ff985e] mt-20">
+        <div class="text-[#f9fad2] ">
+            <p class="text-2xl flex justify-center">Contact us through our social networks</p>
+            <div class="flex justify-center my-2">
+            <i class="fa-brands fa-twitter m-2 text-xl"></i>
+            <i class="fa-brands fa-facebook m-2 text-xl"></i>
+            <i class="fa-brands fa-instagram m-2 text-xl"></i>
+            <i class="fa-solid fa-envelope m-2 text-xl"></i>
+            </div>
         </div>
+        <p class="my-4 text-end text-xl font-bold p-2">Made with <i class="fa-solid fa-heart text-red-600 animate-bounce"></i> by Indra</p>
     </footer>
     
     <script src="js/main.js"></script>
