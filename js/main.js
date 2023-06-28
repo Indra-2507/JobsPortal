@@ -5,13 +5,11 @@ const $$ = (selector) => document.querySelectorAll(selector)
 const showElement = (selector) => $(selector).classList.remove("hidden")
 const hideElement = (selector) => $(selector).classList.add("hidden")
 const cleanContainer = (selector) => $(selector).innerHTML = ''
-
 const showElements = (selectors) => {
     for (const selector of selectors){
         $(selector).classList.remove("hidden")
     }
 }
-
 const hideElements = (selectors) => {
     for (const selector of selectors){
         $(selector).classList.add("hidden")
@@ -20,15 +18,13 @@ const hideElements = (selectors) => {
 
 let isSubmit = false
 
-//get information
+//Fetchs
 const getJobs = (params) => {
-    
    fetch(`http://6487a592beba62972790de96.mockapi.io/jobs/?${params ? `${params}` : ""}`)
         .then(res => res.json())
         .then(jobs => renderJobs(jobs)
         )
 }
-
 
 const getDetails = (jobId) => {
     fetch(`http://6487a592beba62972790de96.mockapi.io/jobs/${jobId}`)
@@ -42,12 +38,12 @@ const getForm =(jobId = "")=>{
         .then(jobs => {
             if (jobId === "") {
                 renderJobs(jobs)
-            } else {
+            } else 
+            {
                 populateForm(jobs)
             }
         })
-    }
-
+}
 
 const newJob =() =>{
      fetch(`http://6487a592beba62972790de96.mockapi.io/jobs`, {
@@ -67,26 +63,26 @@ const editJob =(jobId)=>{
             },
             body: JSON.stringify(saveJob(jobId))
         }).finally(() => window.location.reload())
-    }
+}
 
 const deleteJob =(jobId) =>{
-    fetch(`http://6487a592beba62972790de96.mockapi.io/Jobs/${jobId}`, {
+    fetch(`http://6487a592beba62972790de96.mockapi.io/jobs/${jobId}`, {
         method: "DELETE"
     }).finally(() => window.location.reload())
 }
 
-//render functions
+//Render functions
 const renderJobs = (jobs) => {
-    cleanContainer("#renderCard")
+    cleanContainer("#render-card")
    showElement("#spinner")
     if (jobs) { 
 setTimeout(() => {
             hideElement("#spinner")
             for (const { id, name, information, style, image,location, instrument } of jobs) {
-                $("#renderCard").innerHTML += `
+                $("#render-card").innerHTML += `
                 <div class="border-y-[#a2825c] border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-gradient-to-r from-[#f5da7a] to-[#88d3ab]">
                 <img src="${image}" alt="">
-                <h2 class="text-center py-2 font-bold">${name}</h2>
+                <h2 id="jobsName" name="${name}" class="text-center py-2 font-bold">${name}</h2>
                 <p class="text-sm py-2"> ${information} </p>
                 <div class=" text-start py-2">
                     <span class="bg-[#88d3ab] rounded px-2"> ${style}</span>
@@ -102,7 +98,7 @@ setTimeout(() => {
 }
 
 const renderJobInformation = ({id, name, description, image, benefits, long_term, instruments, salary }) =>{
-       hideElement("#renderCard") 
+       hideElement("#render-card") 
         showElement("#spinner")
     setTimeout(() => { 
        hideElement("#spinner")
@@ -129,7 +125,7 @@ const renderJobInformation = ({id, name, description, image, benefits, long_term
     2000)
 }
     
-//Filters
+//Filters functions
 
 const getParams = (key,selector) => {
     const params = {
@@ -139,25 +135,38 @@ const getParams = (key,selector) => {
     return url
 }
 
+const locationfunction = () =>{
+    $("#location").value
+    $("#instrument").disabled = true
+    $("#style").disabled =true
+   getJobs(getParams("location","#location"))
+}   
 
-const seeDetails = (jobId) =>{
-    hideElement("#search-form")
-    getDetails(jobId)
+const instrumentfunction = () =>{
+    $("#instrument").value
+    $("#location").disabled =true
+    $("#style").disabled =true
+   getJobs(getParams("instrument","#instrument"))
+}   
+
+const stylefunction =() =>{
+    $("#style").value
+    $("#location").disabled =true
+    $("#instrument").disabled = true
+    getJobs(getParams("style","#style"))
+
 }
-//save data
+
+
+//Data functions
 const deleteJobs =()=>{
     hideElement("#renderJobInformation")
     showElement("#modal-window")
-    const jobId = $("#delete-btn").getAttribute("data-id")
-    $("#modal-delete").setAttribute("data-id", jobId)
+     const jobId = $("#delete-btn").getAttribute("data-id")
+    const name = $("#jobsName").getAttribute("name")
+    $("#modal-delete").setAttribute("data-id", jobId) 
+    $(".modal-text").innerHTML = name
     modalDelete(jobId)
-   
-}
-const modalDelete=(jobId)=>{
-$("#modal-delete").addEventListener("click", ()=>{
-    deleteJob(jobId)
-    hideElement("#modal-window")
-})
 }
 
 const editJobs= ()=>{
@@ -189,6 +198,11 @@ const saveJob = () => {
     }
 }
 
+const seeDetails = (jobId) =>{
+    hideElement("#search-form")
+    getDetails(jobId)
+}
+
 const populateForm =({name, image, information, location, instrument, style, benefits, salary, long_term, instruments, description})=>{
         $("#name").value = name
         $("#image").value = image
@@ -203,65 +217,54 @@ const populateForm =({name, image, information, location, instrument, style, ben
         $("#instrument1").value = instruments,
         $("#instrument2").value = instruments,
         $("#instrument3").value = instruments
-        $("#description").value = description
+        $("#description").value = description    
 }
 
-
+//Events functions
 $("#btn-clear").addEventListener("click", (e)=>{
     e.preventDefault
     $("#search-form").reset()
- })
-
-
-const locationfunction = () =>{
-    $("#location").value
-    $("#instrument").disabled = true
-    $("#style").disabled =true
-   getJobs(getParams("location","#location"))
-}   
-
-const instrumentfunction = () =>{
-    $("#instrument").value
-    $("#location").disabled =true
-    $("#style").disabled =true
-   getJobs(getParams("instrument","#instrument"))
-}   
-
-const stylefunction =() =>{
-    $("#style").value
-    $("#location").disabled =true
-    $("#instrument").disabled = true
-    getJobs(getParams("style","#style"))
-
-}
-
-
-$("#btn-create").addEventListener("click", (e)=>{
-    hideElements(["#btn-create","#search-form", "#renderCard", "#renderJobInformation"])
-    showElement("#new-job")
-    isSubmit = true
 })
 
+ const modalDelete = (jobId) =>{
+    $("#modal-delete").addEventListener("click", ()=>{
+        deleteJob(jobId)
+        hideElement("#modal-window")
+    })
+}
+
+$("#btn-create").addEventListener("click", ()=>{
+    showElement("#spinner")
+    setTimeout(() => {
+        hideElements(["#btn-create","#search-form", "#render-card", "#renderJobInformation", "#spinner"])
+        showElement("#new-job")
+        isSubmit = true     
+ }, 2000)   
+})
 
 $("#new-job").addEventListener("submit", (e)=>{
     e.preventDefault()
     showElement("#spinner")
-    setTimeout(() => { 
-    hideElement("#search-form")
-    if (isSubmit) {
-        newJob()
-    } else {
-        const jobId = $(".edit-form").getAttribute("data-id")
-        editJob(jobId)
-        hideElement("#new-job")
-    }
-    $("#new-job").reset()
-}),2000
+        hideElement("#spinner")
+        hideElement("#search-form")
+        if (isSubmit) {
+            newJob()
+        } else {
+          
+            const jobId = $(".edit-form").getAttribute("data-id")
+            editJob(jobId)
+            hideElement("#new-job") 
+        }
+        showElement("#succesfull-alert")
+        $("#new-job").reset()
+        setTimeout(() => {
+            hideElement("#succesfull-alert");
+        }, 1500);
 })
 
 $("#modal-cancel").addEventListener("click", ()=>{
     hideElement("#modal-window")
-    showElement("#renderCard")
+    showElement("#render-card")
     showElement("#search-form")
     renderJobs(getJobs())
 })

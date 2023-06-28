@@ -13,7 +13,7 @@
     <header>
         <!-- Navbar-->
         <nav>
-           <img src="assets/abstract-music-soundwave-banner-design-free-vector.jpg" alt="" class="w-full h-40">
+           <img src="assets/banner.jpg" alt="presentation banner" class="w-full h-40">
            <div class="bg-[#ff985e] w-full h-20 flex justify-around py-6">
             <div id="navbar" class="flex justify-center items-center">
                 <a href="index.html" class="text-[#f9fad2] font-medium text-lg px-2 focus:text-[#a2825c]">Home</a>
@@ -26,12 +26,13 @@
     </header>
     <!-- ****** Main ****** -->
     <main>
+        <!-- Search form -->
         <form id="search-form" class="flex">
             <div class="m-4 w-3/4 flex flex-col">
                 <label for="location"  class="text-[#a2825c] font-bold">Location</label>
                 <select onchange="locationfunction()" id="location" class="text-[#a2825c] border rounded m-2">   
                 <option value="">Select an option</option>
-                <option value="argentina">Argentina</option>
+                <option value="Argentina">Argentina</option>
                 <option value="Brazil">Brazil</option>
                 <option value="Ecuador">Ecuador</option>
                 <option value="Chile">Chile</option>
@@ -57,19 +58,23 @@
                 </select>
             </div>
             <div class="m-4 w-1/4 flex flex-col items-center justify-center"> 
-                <button  id="btn-clear" class="rounded-lg bg-[#88d3ab] m-2 py-2 w-28 font-bold active:bg-[#f5da7a]">Clear<i class="fa-solid fa-broom"></i></button>
+                <button  id="btn-clear" class="rounded-lg bg-[#88d3ab] m-2 py-2 w-28 font-bold active:bg-[#f5da7a">Clear<i class="fa-solid fa-broom"></i></button>
             </div>
         </form>
-        <div id="spinner" class="hidden animate-bounce w-20 h-20 mx-auto">
+        
+        <!-- Spinner -->
+        <div id="spinner" class="hidden animate-bounce w-20 h-20 mx-auto mt-6">
             <img src="/assets/spinner.png" alt="spinner" class="rounded-full">
         </div>
-        
-        <div id="renderCard" class="flex justify-around flex-wrap m-4">
+        <!-- Render cards -->
+        <div id="render-card" class="flex justify-around flex-wrap m-4">
         </div>
+        
         <div class="flex ">
             <div id="renderJobInformation" class="hidden border-2 rounded-lg w-3/4 p-2 bg-repeat mx-auto mt-20 grid grid-rows-1 bg-[url('https://img.freepik.com/vector-gratis/fondo-acuarela-purpura-abstracto_23-2149036193.jpg?size=626&ext=jpg&ga=GA1.1.1739721551.1669313569')] ">           
         </div>
-        <form action="" id="new-job" class="hidden grid grid-cols m-4 p-4 border-double border-8 border-[#408156] shadow-xl shadow[#93a31c]-500/50 bg-[#e5f3ba] mx-auto mt-20 text-[#a2825c]">
+        <!-- New job and ecit job form -->
+        <form action="" id="new-job" class="hidden grid grid-cols m-4 p-4 border-double border-8 border-[#408156] shadow-xl shadow[#93a31c]-500/50 bg-[#e5f3ba] mx-auto mt-20 text-[#a2825c">
             <label for="name" class="m-2 font-bold">Job Title</label>
             <input type="text" name="name" id="name" class="rounded m-2">
             <label for="url" class="m-2 font-bold">Image</label>
@@ -127,6 +132,10 @@
                 <button class="hidden edit-form rounded-lg bg-[#f5da7a] m-4 py-2 w-28 font-bold hover:bg-[#a2825c] hover:text-[#f5da7a]">Edit <i class="fa-solid fa-pencil"></i></button>
             </div>  
         </form>
+        <!-- Succesfull alert -->
+      <div id="succesfull-alert" class="hidden flex justify-center items-center bg-green-100 border border-green-400 text-green-700 p-4 rounded w-full h-20 fixed top-1/2" role="alert"> <strong class="font-bold"> <i class="fa-solid fa-check border border-[#408156] rounded-full p-4"></i></strong>
+      <span class="block sm:inline mx-2"> You have add a new job</span>
+    </div>
          <!-- Modal Window -->
       <div id="modal-window" class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div class="fixed inset-0 bg-transparent backdrop-blur-sm bg-opacity-75 transition-opacity">
