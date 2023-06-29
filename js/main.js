@@ -124,7 +124,73 @@ const renderJobInformation = ({id, name, description, image, benefits, long_term
     } ,
     2000)
 }
-    
+
+const saveJob = () => {
+    return {
+        name: $("#name").value,
+        image: $("#image").value,
+        information: $("#information").value,
+        location: $("#locationForm").value,
+        instrument: $("#instrumentForm").value,
+        style: $("#styleForm").value,
+        benefits: $("#vacations").value && $("#costs").value,
+        salary : $("#salary").value,
+        long_term: $("#long_term_no").value,
+        long_term: $("#long_term_yes").value,
+        instruments : [
+            $("#instrument1").value,
+            $("#instrument2").value,
+            $("#instrument3").value
+        ],
+        description: $("#description").value,
+    }
+}
+const populateForm =({name, image, information, location, instrument, style, benefits, salary, long_term_no, long_term_yes, instruments, description})=>{
+    $("#name").value = name
+    $("#image").value = image
+    $("#information").value = information
+    $("#locationForm").value =location
+    $("#instrumentForm").value =instrument
+    $("#styleForm").value =style
+    $("#vacations").value= benefits
+    $("#costs").value = benefits
+    $("#salary").value = salary
+    $("#long_term_no").value =long_term_no
+    $("#long_term_yes").value= long_term_yes
+    $("#instrument1").value = instruments,
+    $("#instrument2").value = instruments,
+    $("#instrument3").value = instruments,
+    $("#description").value = description    
+}
+
+const validateForm = () =>{
+    const name = $("#name").value.trim()
+    //const image = $("#image").value
+    const information = $("#information").value.trim()
+    // const locationForm = $("#locationForm").value
+    // const instrumentForm = $("#instrumentForm").value
+    // const styleForm = $("#styleForm").value
+    const vacations = $("#vacations").value.trim()
+    const costs = $("#costs").value.trim()
+    // const salary = $("#salary").valueAsNumber
+    // const long_term_yes = $("#long_term_yes").value
+    // const long_term_no = $("#long_term_no").value
+    const instrument1 = $("#instrument1").value.trim()
+    const description = $("#description").value.trim()
+
+    if (name, information, vacations, costs, instrument1, description === "") {
+        showElement(".description-error")
+        $("input").classList.add("border-red-600")
+        $("select").classList.add("border-red-600")
+    } else {
+        hideElement(".description-error")
+        $("input").classList.remove("border-red-600")
+        $("select").classList.remove("border-red-600")
+    }
+    return name !== ""   && vacations  !== ""  && costs !== ""  && instrument1  !== "" && description !== "" 
+}
+
+
 //Filters functions
 
 const getParams = (key,selector) => {
@@ -178,46 +244,9 @@ showElements(["#new-job",".edit-form"])
     isSubmit = false  
 }  
 
-const saveJob = () => {
-    return {
-        name: $("#name").value,
-        image: $("#image").value,
-        information: $("#information").value,
-        location: $("#locationForm").value,
-        instrument: $("#instrumentForm").value,
-        style: $("#styleForm").value,
-        benefits: $("#vacations").value && $("#costs").value,
-        salary : $("#salary").value,
-        long_term: $("#long_term").value,
-        instruments : [
-            $("#instrument1").value,
-            $("#instrument2").value,
-            $("#instrument3").value
-        ],
-        description: $("#description").value,
-    }
-}
-
 const seeDetails = (jobId) =>{
     hideElement("#search-form")
     getDetails(jobId)
-}
-
-const populateForm =({name, image, information, location, instrument, style, benefits, salary, long_term, instruments, description})=>{
-        $("#name").value = name
-        $("#image").value = image
-        $("#information").value = information
-        $("#locationForm").value =location
-        $("#instrumentForm").value =instrument
-        $("#styleForm").value =style
-        $("#vacations").value= benefits
-        $("#costs").value = benefits
-        $("#salary").value = salary
-        $("#long_term").value =long_term
-        $("#instrument1").value = instruments,
-        $("#instrument2").value = instruments,
-        $("#instrument3").value = instruments
-        $("#description").value = description    
 }
 
 //Events functions
@@ -244,7 +273,8 @@ $("#btn-create").addEventListener("click", ()=>{
 
 $("#new-job").addEventListener("submit", (e)=>{
     e.preventDefault()
-    showElement("#spinner")
+    if(validateForm()){
+        showElement("#spinner")
         hideElement("#spinner")
         hideElement("#search-form")
         if (isSubmit) {
@@ -260,6 +290,8 @@ $("#new-job").addEventListener("submit", (e)=>{
         setTimeout(() => {
             hideElement("#succesfull-alert");
         }, 1500);
+    }
+   
 })
 
 $("#modal-cancel").addEventListener("click", ()=>{
@@ -377,7 +409,7 @@ window.addEventListener("load", () => {
     // {
     //   "name": "Drummer",
     //   "image": "https://img.freepik.com/vector-gratis/bateria-dibujada-mano_1379-14.jpg?size=626&ext=jpg&ga=GA1.1.1739721551.1669313569&semt=ais",
-    //   "information": "Drummer requiered for Rock band",
+    //   "information": "Drummer  required for Rock band",
     //   "location": "Argentina",
     //   "instrument": "Percussion",
     //   "style": "Rock"   
@@ -422,7 +454,7 @@ window.addEventListener("load", () => {
     //   "information": "Cantante femenino para banda Pop",
     //   "location": "Chile",
     //   "style": "vocals",
-    //   "experience": "non requiered",
+    //   "experience": "non  required",
     //   "benefits": {
     //     "vacations": "1 weeks",
     //     "travel costs": "reimbursed by the company"
