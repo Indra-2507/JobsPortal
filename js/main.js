@@ -133,7 +133,9 @@ const saveJob = () => {
         location: $("#locationForm").value,
         instrument: $("#instrumentForm").value,
         style: $("#styleForm").value,
-        benefits: $("#vacations").value && $("#costs").value,
+        // benefits: {
+        //     $("#vacations").value,
+        //     $("#costs").value },
         salary : $("#salary").value,
         long_term: $("#long_term_no").value,
         long_term: $("#long_term_yes").value,
@@ -163,33 +165,107 @@ const populateForm =({name, image, information, location, instrument, style, ben
     $("#description").value = description    
 }
 
-const validateForm = () =>{
+
+const validateForm=() => {
     const name = $("#name").value.trim()
-    //const image = $("#image").value
+    const image = $("#image").value.trim()
     const information = $("#information").value.trim()
-    // const locationForm = $("#locationForm").value
-    // const instrumentForm = $("#instrumentForm").value
-    // const styleForm = $("#styleForm").value
+    const locationForm = $("#locationForm").value.trim()
+    const instrumentForm = $("#instrumentForm").value.trim()
+    const styleForm = $("#styleForm").value.trim()
     const vacations = $("#vacations").value.trim()
     const costs = $("#costs").value.trim()
-    // const salary = $("#salary").valueAsNumber
-    // const long_term_yes = $("#long_term_yes").value
-    // const long_term_no = $("#long_term_no").value
+    const salary = $("#salary").valueAsNumber
+    const long_term = $("#long_term").value
     const instrument1 = $("#instrument1").value.trim()
     const description = $("#description").value.trim()
 
-    if (name, information, vacations, costs, instrument1, description === "") {
+    if(name === "") {
+        showElement(".name-error")
+       $("#name").focus()
+    } else {
+        hideElement(".name-error")
+        $("#name").focus()    
+    }
+    if(information === "") {
+        showElement(".information-error")
+        $("#information").focus() 
+    } else {
+        hideElement(".information-error")
+        $("#information").focus()    
+    }
+    if(image === "") {
+        showElement(".image-error")
+        $("#image").focus() 
+    } else {
+        hideElement(".image-error")
+        $("#image").focus()    
+    }
+    if(locationForm === "") {
+        showElement(".location-error")
+        $("#locationForm").focus() 
+    } else {
+        hideElement(".location-error")
+        $("#locationForm").focus()    
+    }
+    if(instrumentForm === "") {
+        showElement(".instrument-error")
+        $("#instrumentForm").focus()
+    } else {
+        hideElement(".instrument-error")
+        $("#instrumentForm").focus()    
+    }
+    if(styleForm === "") {
+        showElement(".style-error")
+        $("#styleForm").focus() 
+    } else {
+        hideElement(".style-error")
+        $("#styleForm").focus()    
+    }
+    if(vacations === "") {
+        showElement(".vacations-error")
+        $("#vacations").focus() 
+    } else {
+        hideElement(".vacations-error")
+        $("#vacations").focus()    
+    }
+    if(costs === "") {
+        showElement(".costs-error")
+        $("#costs").focus() 
+    } else {
+        hideElement(".costs-error")
+        $("#costs").focus()    
+    }
+    if(isNaN(salary)) {
+        showElement(".salary-error")
+        $("#salary").focus() 
+    } else {
+        hideElement(".salary-error")
+        $("#salary ").focus()    
+    }
+    if(long_term === "") {
+        showElement(".long_term-error")
+        $("#long_term ").focus() 
+    } else {
+        hideElement(".long_term-error")
+        $("#long_term ").focus()    
+    }
+    if(instrument1 === "") {
+        showElement(".instrument1-error")
+        $("#instrument1").focus() 
+    } else {
+        hideElement(".instrument1-error")
+        $("#instrument1").focus()    
+    }
+    if(description === "") {
         showElement(".description-error")
-        $("input").classList.add("border-red-600")
-        $("select").classList.add("border-red-600")
+        $("#description").focus() 
     } else {
         hideElement(".description-error")
-        $("input").classList.remove("border-red-600")
-        $("select").classList.remove("border-red-600")
+        $("#description").focus()    
     }
-    return name !== ""   && vacations  !== ""  && costs !== ""  && instrument1  !== "" && description !== "" 
+    return name !== "" && !isNaN(salary) && information !== "" && image !== "" &&  locationForm !== "" && instrumentForm !== "" && styleForm !== "" && vacations !== "" && costs !== "" && long_term !== "" && instrument1 !== "" && description !== "" 
 }
-
 
 //Filters functions
 
@@ -280,7 +356,6 @@ $("#new-job").addEventListener("submit", (e)=>{
         if (isSubmit) {
             newJob()
         } else {
-          
             const jobId = $(".edit-form").getAttribute("data-id")
             editJob(jobId)
             hideElement("#new-job") 
@@ -290,8 +365,7 @@ $("#new-job").addEventListener("submit", (e)=>{
         setTimeout(() => {
             hideElement("#succesfull-alert");
         }, 1500);
-    }
-   
+    }   
 })
 
 $("#modal-cancel").addEventListener("click", ()=>{

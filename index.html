@@ -76,11 +76,14 @@
         <!-- New job and ecit job form -->
         <form action="" id="new-job" class="hidden grid grid-cols m-4 p-4 border-double border-8 border-[#408156] shadow-xl shadow[#93a31c]-500/50 bg-[#e5f3ba] mx-auto mt-20 text-[#a2825c">
             <label for="name" class="m-2 font-bold">Job Title</label>
-            <input type="text" name="name" id="name" class="rounded m-2"  >
+            <input type="text" name="name" id="name" class="rounded m-2">
+            <p class="name-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>This field must be completed</p>
             <label for="image" class="m-2 font-bold">Image</label>
-            <input type="url" src="{image}" name="image" id="image" class="rounded m-2"  >   
+            <input type="url" src="{image}" name="image" id="image" class="rounded m-2">
+            <p class="image-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Please insert a image</p>   
             <label for="information" class=" m-2 font-bold">Information</label>
-            <input type="text" name="information" id="information" class="rounded m-2"  >
+            <input type="text" name="information" id="information" class="rounded m-2">
+            <p class="information-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>This field must be completed.</p>
             <select id="locationForm" class="m-2 border border-[#a2825c] rounded font-bold"  >
                 <option value="">Country</option>
                 <option value="Argentina">Argentina</option>
@@ -89,6 +92,7 @@
                 <option value="Chile">Chile</option>
                 <option value="Uruguay">Uruguay</option>
             </select>
+            <p class="location-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Please choose an option</p>
             <select id="instrumentForm" class="m-2 border border-[#a2825c] rounded font-bold"  >
                 <option  value="">Type of instrument</option>
                 <option  value="String">String</option>
@@ -97,6 +101,7 @@
                 <option value="Electronic">Electronic</option>
                 <option value="Vocals">Vocals</option>
             </select>
+            <p class="instrument-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Please choose an option</p>
             <select id="styleForm" class="m-2 border border-[#a2825c] rounded font-bold"  >
                 <option value="">Type of band</option>
                 <option value="Rock">Rock</option>
@@ -105,25 +110,32 @@
                 <option value="Pop">Pop</option>
                 <option value="Blues">Blues</option>
             </select>
+            <p class="style-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Please choose an option</p>
             <label for="description" class="m-2 font-bold">Description</label>
-            <input type="text" name="description" id="description" class="rounded m-2"  >
+            <input type="text" name="description" id="description" class="rounded m-2">
+            <p class="description-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>This field must be completed</p>
             <div class="border border-[#a2825c] m-2 p-4">
                 <p class="font-bold">Benefits</p>
                 <label for="vacations" class="m-2 font-bold">Vacations</label>
-                <input type="text" name="vacations" id="vacations" class="rounded m-2"  >
+                <input type="text" name="vacations" id="vacations" class="rounded m-2">
+                <p class="vacations-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>This field must be completed.</p>
                 <label for="costs" class="m-2 font-bold">Costs</label>
-                <input type="text" name="costs" id="costs" class="rounded m-2"  >
+                <input type="text" name="costs" id="costs" class="rounded m-2">
+                <p class="costs-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>This field must be completed</p>
             </div>
             <label for="salary" class="m-2 rounded font-bold">Salary</label>
             <input type="number" name="salary" id="salary" class="m-2">
+            <p class="salary-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Only numbers are allowed</p>
             <div class="flex items-center flex-wrap my-2 p-4 border border-[#a2825c]">
-                <label for="long_term" class="w-full m-2 font-bold">Long term</label>
+                <label for="long_term" id="long_term" class="w-full m-2 font-bold">Long term</label>
                 <input type="radio" name="long_term" id="long_term_yes" class="mx-4">Yes
                 <input type="radio" name="long_term" id="long_term_no" class="mx-4">No
+                <p class="long_term-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Please choose an option</p>
             </div>
             <div class="">
                 <label for="instruments" class="m-2 font-bold">Instruments</label>
-                <input type="text" name="instrument1" id="instrument1" class="rounded m-2"  >
+                <input type="text" name="instrument1" id="instrument1" class="rounded m-2">
+                <p class="instrument1-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>This field must be completed</p>
                 <input type="text" name="instrument2" id="instrument2" class="rounded m-2">
                 <input type="text" name="instrument3" id="instrument3" class="rounded m-2">
             </div>
@@ -132,11 +144,7 @@
                 <button class="hidden edit-form rounded-lg bg-[#f5da7a] m-4 py-2 w-28 font-bold hover:bg-[#a2825c] hover:text-[#f5da7a]">Edit <i class="fa-solid fa-pencil"></i></button>
             </div>  
         </form>
-        <!-- Validate form alert -->
-        <p class="description-error hidden p-2 ml-2 text-red-600">
-            <i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una
-            descripción válida.
-          </p>
+        
         <!-- Succesfull alert -->
       <div id="succesfull-alert" class="hidden flex justify-center items-center bg-green-100 border border-green-400 text-green-700 p-4 rounded w-full h-20 fixed top-1/2" role="alert"> <strong class="font-bold"> <i class="fa-solid fa-check border border-[#408156] rounded-full p-4"></i></strong>
       <span class="block sm:inline mx-2"> You have add a new job</span>
