@@ -28,9 +28,9 @@
     <main>
         <!-- Search form -->
         <form id="search-form" class="flex">
-            <div class="m-4 w-3/4 flex flex-col">
-                <label for="location"  class="text-[#a2825c] font-bold">Location</label>
-                <select onchange="locationfunction()" id="location" class="text-[#a2825c] border rounded m-2">   
+            <div class="m-4 w-3/4 flex flex-col xl:w-1/2 xl:mx-auto">
+                <label for="location" class="text-[#a2825c] font-bold">Location</label>
+                <select id="location" class="text-[#a2825c] border rounded m-2">   
                 <option value="">Select an option</option>
                 <option value="Argentina">Argentina</option>
                 <option value="Brazil">Brazil</option>
@@ -39,7 +39,7 @@
                 <option value="Uruguay">Uruguay</option>
             </select>
             <label for="instrument" class="text-[#a2825c] font-bold">Type of instrument</label>
-                <select onchange="instrumentfunction()" id="instrument"  class="text-[#a2825c] border rounded m-2">
+                <select id="instrument"  class="text-[#a2825c] border rounded m-2">
                 <option value="">Select an option</option>
                 <option value="string">String</option>
                 <option value="percussion">Percussion</option>
@@ -48,7 +48,7 @@
                 <option value="vocals">Vocals</option>
             </select>
             <label for="style" class="text-[#a2825c] font-bold">Style of band</label>
-                <select onchange="stylefunction()" id="style"  class=" text-[#a2825c] border rounded m-2">
+                <select  id="style"  class=" text-[#a2825c] border rounded m-2">
                     <option value="">Select an option</option>
                     <option value="rock">Rock</option>
                     <option value="jazz">Jazz</option>
@@ -67,13 +67,13 @@
             <img src="/assets/spinner.png" alt="spinner" class="rounded-full">
         </div>
         <!-- Render cards -->
-        <div id="render-card" class="flex justify-around flex-wrap m-4">
+        <div id="render-card" class="flex justify-between flex-wrap m-4 ">
         </div>
         
-        <div class="flex ">
-            <div id="renderJobInformation" class="hidden border-2 rounded-lg w-3/4 p-2 bg-repeat mx-auto mt-20 grid grid-rows-1 bg-[url('https://img.freepik.com/vector-gratis/fondo-acuarela-purpura-abstracto_23-2149036193.jpg?size=626&ext=jpg&ga=GA1.1.1739721551.1669313569')] ">           
+        <div class="flex">
+            <div id="renderJobInformation" class="hidden border-2 rounded-lg w-3/4 bg-repeat mx-auto mt-20 grid grid-rows-1 bg-[url('https://img.freepik.com/vector-gratis/fondo-acuarela-purpura-abstracto_23-2149036193.jpg?size=626&ext=jpg&ga=GA1.1.1739721551.1669313569')] ">           
         </div>
-        <!-- New job and ecit job form -->
+        <!-- New job and edit job form -->
         <form action="" id="new-job" class="hidden grid grid-cols m-4 p-4 border-double border-8 border-[#408156] shadow-xl shadow[#93a31c]-500/50 bg-[#e5f3ba] mx-auto mt-20 text-[#a2825c">
             <label for="name" class="m-2 font-bold">Job Title</label>
             <input type="text" name="name" id="name" class="rounded m-2">
@@ -127,9 +127,9 @@
             <input type="number" name="salary" id="salary" class="m-2">
             <p class="salary-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Only numbers are allowed</p>
             <div class="flex items-center flex-wrap my-2 p-4 border border-[#a2825c]">
-                <label for="long_term" id="long_term" class="w-full m-2 font-bold">Long term</label>
-                <input type="radio" name="long_term" id="long_term_yes" class="mx-4">Yes
-                <input type="radio" name="long_term" id="long_term_no" class="mx-4">No
+                <label for="long_term" id="long_term" name="long_term" class="w-full m-2 font-bold">Long term</label>
+                <input type="radio" name="long_term" class="long_term" id="yes" class="mx-4">Yes
+                <input type="radio" name="long_term" class="long_term" id="no" class="mx-4">No
                 <p class="long_term-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Please choose an option</p>
             </div>
             <div class="">

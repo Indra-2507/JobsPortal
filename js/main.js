@@ -80,8 +80,8 @@ setTimeout(() => {
             hideElement("#spinner")
             for (const { id, name, information, style, image,location, instrument } of jobs) {
                 $("#render-card").innerHTML += `
-                <div class="border-y-[#a2825c] border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-gradient-to-r from-[#f5da7a] to-[#88d3ab]">
-                <img src="${image}" alt="">
+                <div class="border-y-[#a2825c] border-2 rounded-md w-2/5 m-2 p-2 grid grid-rows-1 bg-gradient-to-r from-[#f5da7a] to-[#88d3ab] xl:w-1/4">
+                <img src="${image}" alt="job image" class="p-4">
                 <h2 id="jobsName" name="${name}" class="text-center py-2 font-bold">${name}</h2>
                 <p class="text-sm py-2"> ${information} </p>
                 <div class=" text-start py-2">
@@ -89,14 +89,21 @@ setTimeout(() => {
                     <span class="bg-gradient-to-r from-[#88d3ab] to-[#f5da7a] rounded px-2"> ${location}</span>
                     <span class="bg-[#f5da7a] rounded px-2"> ${instrument}</span>
                 </div>
-                <button id="btn-details" onclick="seeDetails('${id}')" class="bg-[#ff985e] my-4 py-2 w-28 font-bold rounded mx-auto text-[#f9fad2] active:bg-[#f9fad2] active:text-[#ff985e]">See details</button>
+                <button id="btn-details" data-id="${id}" class="bg-[#ff985e] my-4 py-2 w-28 font-bold rounded mx-auto text-[#f9fad2] active:bg-[#f9fad2] active:text-[#ff985e]">See details</button>
             </div>
                 `
+                for (const btn of $$("#btn-details")) {
+                btn.addEventListener("click",(e)=>{
+                    e.preventDefault()
+                    hideElement("#search-form")
+                    const jobId = btn.getAttribute("data-id")
+                    getDetails(jobId)
+                })
+            } 
             }
     }, 2000)
     }
 }
-
 const renderJobInformation = ({id, name, description, image, benefits, long_term, instruments, salary }) =>{
        hideElement("#render-card") 
         showElement("#spinner")
@@ -104,8 +111,8 @@ const renderJobInformation = ({id, name, description, image, benefits, long_term
        hideElement("#spinner")
         showElement("#renderJobInformation")
                 $("#renderJobInformation").innerHTML += `
-                <div class="text-[#5a1e4a] text-center">
-                <img src="${image}" alt="" class="p-2 mx-auto ">
+                <div class="text-[#5a1e4a] text-center mx-auto mt-20 mb-8">
+                <img src="${image}" alt="job image" class="p-4">
                 <h2 class="text-center py-2 text-2xl font-bold">${name}</h2>
                 <p class="py-2"> ${description} </p>
                 <h3 class="text-xl font-bold">Benefits</h3>
@@ -117,10 +124,29 @@ const renderJobInformation = ({id, name, description, image, benefits, long_term
                     <span class="bg-[#5a1e4a] text-[#f9fad2] rounded p-2"> Long term: ${long_term}</span>
                 </div>
                 <div class="my-6 ">
-                <button id="edit-btn" onclick="editJobs('${id}')" data-id="${id}" class="rounded-lg bg-[#f5da7a] m-4 py-2 w-28 font-bold">Edit <i class="fa-solid fa-pencil"></i></button>
-                <button id="delete-btn" onclick="deleteJobs('${id}')" data-id="${id}" class="rounded-lg bg-[#c2412d] m-4 py-2 w-28 font-bold text-[#f5da7a]">Delete <i class="fa-solid fa-trash"></i></button>
+                <button id="edit-btn" data-id="${id}" class="rounded-lg bg-[#f5da7a] m-4 py-2 w-28 font-bold">Edit <i class="fa-solid fa-pencil"></i></button>
+                <button id="delete-btn" data-id="${id}" class="rounded-lg bg-[#c2412d] m-4 py-2 w-28 font-bold text-[#f5da7a]">Delete <i class="fa-solid fa-trash"></i></button>
                 </div>
                     `
+                $("#edit-btn").addEventListener("click", (e)=>{
+                    e.preventDefault()
+                        hideElements(["#renderJobInformation" , ".submit-btn"])
+                        showElements(["#new-job",".edit-form"])
+                            const jobId = $("#edit-btn").getAttribute("data-id")
+                            $(".edit-form").setAttribute("data-id", jobId)
+                            getForm(jobId)
+                            isSubmit = false  
+                })
+                    for (const btn of $$("#delete-btn")){
+                        btn.addEventListener("click", (e)=>{
+                        e.preventDefault()
+                        hideElement("#renderJobInformation")
+                        showElement("#modal-window")
+                        const jobId = $("#delete-btn").getAttribute("data-id")
+                        $(".modal-text").innerHTML = name
+                        modalDelete(jobId)
+                })}
+                
     } ,
     2000)
 }
@@ -133,12 +159,14 @@ const saveJob = () => {
         location: $("#locationForm").value,
         instrument: $("#instrumentForm").value,
         style: $("#styleForm").value,
-        // benefits: {
-        //     $("#vacations").value,
-        //     $("#costs").value },
+        benefits: 
+            {
+            vacations: $("#vacations").value,
+            costs: $("#costs").value 
+            },
         salary : $("#salary").value,
-        long_term: $("#long_term_no").value,
-        long_term: $("#long_term_yes").value,
+        long_term: $("#no").value && $("#yes").value,
+    
         instruments : [
             $("#instrument1").value,
             $("#instrument2").value,
@@ -147,21 +175,20 @@ const saveJob = () => {
         description: $("#description").value,
     }
 }
-const populateForm =({name, image, information, location, instrument, style, benefits, salary, long_term_no, long_term_yes, instruments, description})=>{
+const populateForm =({name, image, information, location, instrument, style, benefits, salary, long_term, instruments, description }) => {
     $("#name").value = name
     $("#image").value = image
     $("#information").value = information
     $("#locationForm").value =location
-    $("#instrumentForm").value =instrument
-    $("#styleForm").value =style
-    $("#vacations").value= benefits
-    $("#costs").value = benefits
+    $("#instrumentForm").value = instrument
+    $("#styleForm").value = style
+    $("#vacations").value = benefits.vacations
+    $("#costs").value = benefits.costs
     $("#salary").value = salary
-    $("#long_term_no").value =long_term_no
-    $("#long_term_yes").value= long_term_yes
-    $("#instrument1").value = instruments,
-    $("#instrument2").value = instruments,
-    $("#instrument3").value = instruments,
+    $('input[name="long_term"]').value = long_term
+    $("#instrument1").value = instruments[0],
+    $("#instrument2").value = instruments[1],
+    $("#instrument3").value = instruments[2],
     $("#description").value = description    
 }
 
@@ -176,98 +203,91 @@ const validateForm=() => {
     const vacations = $("#vacations").value.trim()
     const costs = $("#costs").value.trim()
     const salary = $("#salary").valueAsNumber
-    const long_term = $("#long_term").value
+    const long_term= $('input[name="long_term"]:checked').value
     const instrument1 = $("#instrument1").value.trim()
     const description = $("#description").value.trim()
 
+    // const long_termInputs = $$('input[name="long_term"]')
+    let selected = false;
+
     if(name === "") {
         showElement(".name-error")
-       $("#name").focus()
+       
     } else {
         hideElement(".name-error")
-        $("#name").focus()    
+         
     }
     if(information === "") {
         showElement(".information-error")
-        $("#information").focus() 
+       
     } else {
         hideElement(".information-error")
-        $("#information").focus()    
+         
     }
     if(image === "") {
         showElement(".image-error")
-        $("#image").focus() 
+       
     } else {
         hideElement(".image-error")
-        $("#image").focus()    
+     
     }
     if(locationForm === "") {
         showElement(".location-error")
-        $("#locationForm").focus() 
+        
     } else {
         hideElement(".location-error")
-        $("#locationForm").focus()    
+           
     }
     if(instrumentForm === "") {
         showElement(".instrument-error")
-        $("#instrumentForm").focus()
+        
     } else {
         hideElement(".instrument-error")
-        $("#instrumentForm").focus()    
+         
     }
     if(styleForm === "") {
         showElement(".style-error")
-        $("#styleForm").focus() 
+        
     } else {
         hideElement(".style-error")
-        $("#styleForm").focus()    
+        
     }
     if(vacations === "") {
         showElement(".vacations-error")
-        $("#vacations").focus() 
+        
     } else {
         hideElement(".vacations-error")
-        $("#vacations").focus()    
+         
     }
     if(costs === "") {
         showElement(".costs-error")
-        $("#costs").focus() 
+        
     } else {
         hideElement(".costs-error")
-        $("#costs").focus()    
+          
     }
     if(isNaN(salary)) {
         showElement(".salary-error")
-        $("#salary").focus() 
     } else {
         hideElement(".salary-error")
-        $("#salary ").focus()    
-    }
-    if(long_term === "") {
-        showElement(".long_term-error")
-        $("#long_term ").focus() 
-    } else {
-        hideElement(".long_term-error")
-        $("#long_term ").focus()    
     }
     if(instrument1 === "") {
         showElement(".instrument1-error")
-        $("#instrument1").focus() 
+      
     } else {
         hideElement(".instrument1-error")
-        $("#instrument1").focus()    
+        
     }
     if(description === "") {
         showElement(".description-error")
-        $("#description").focus() 
+       
     } else {
         hideElement(".description-error")
-        $("#description").focus()    
+     $("#description").focus()    
     }
     return name !== "" && !isNaN(salary) && information !== "" && image !== "" &&  locationForm !== "" && instrumentForm !== "" && styleForm !== "" && vacations !== "" && costs !== "" && long_term !== "" && instrument1 !== "" && description !== "" 
 }
 
-//Filters functions
 
 const getParams = (key,selector) => {
     const params = {
@@ -277,55 +297,31 @@ const getParams = (key,selector) => {
     return url
 }
 
-const locationfunction = () =>{
+//Events functions
+$("#location").addEventListener("change", (e)=>{
+    e.preventDefault
     $("#location").value
     $("#instrument").disabled = true
     $("#style").disabled =true
    getJobs(getParams("location","#location"))
-}   
-
-const instrumentfunction = () =>{
+})
+ $("#instrument").addEventListener("change",(e)=>{
+    e.preventDefault()
     $("#instrument").value
     $("#location").disabled =true
     $("#style").disabled =true
    getJobs(getParams("instrument","#instrument"))
-}   
+ }
+ ) 
 
-const stylefunction =() =>{
+$("#style").addEventListener("change", (e)=>{
+    e.preventDefault()
     $("#style").value
     $("#location").disabled =true
     $("#instrument").disabled = true
     getJobs(getParams("style","#style"))
+})
 
-}
-
-
-//Data functions
-const deleteJobs =()=>{
-    hideElement("#renderJobInformation")
-    showElement("#modal-window")
-     const jobId = $("#delete-btn").getAttribute("data-id")
-    const name = $("#jobsName").getAttribute("name")
-    $("#modal-delete").setAttribute("data-id", jobId) 
-    $(".modal-text").innerHTML = name
-    modalDelete(jobId)
-}
-
-const editJobs= ()=>{
-hideElements(["#renderJobInformation" , ".submit-btn"])
-showElements(["#new-job",".edit-form"])
-    const jobId = $("#edit-btn").getAttribute("data-id")
-    $(".edit-form").setAttribute("data-id", jobId)
-    getForm(jobId)
-    isSubmit = false  
-}  
-
-const seeDetails = (jobId) =>{
-    hideElement("#search-form")
-    getDetails(jobId)
-}
-
-//Events functions
 $("#btn-clear").addEventListener("click", (e)=>{
     e.preventDefault
     $("#search-form").reset()
@@ -351,27 +347,27 @@ $("#new-job").addEventListener("submit", (e)=>{
     e.preventDefault()
     if(validateForm()){
         showElement("#spinner")
-        hideElement("#spinner")
-        hideElement("#search-form")
+        hideElements(["#spinner","#search-form" ])
         if (isSubmit) {
             newJob()
+            setTimeout(() => {
+            hideElement("#succesfull-alert");
+        }, 1500);
+        showElement("#succesfull-alert")
         } else {
+            validateForm()
             const jobId = $(".edit-form").getAttribute("data-id")
             editJob(jobId)
             hideElement("#new-job") 
         }
-        showElement("#succesfull-alert")
         $("#new-job").reset()
-        setTimeout(() => {
-            hideElement("#succesfull-alert");
-        }, 1500);
+        
     }   
 })
 
 $("#modal-cancel").addEventListener("click", ()=>{
     hideElement("#modal-window")
-    showElement("#render-card")
-    showElement("#search-form")
+    showElements(["#render-card","#search-form" ])
     renderJobs(getJobs())
 })
 
