@@ -145,8 +145,8 @@ export const Render = {
        Utils.hideElement("#spinner")
         Utils.showElement("#renderDetails")
                 $("#renderDetails").innerHTML += `
-                <div class="text-[#5a1e4a] text-center mx-auto mt-20 mb-8">
-                <img src="${image}" alt="job image" class="p-4">
+                <div class="text-[#5a1e4a] text-center mx-auto my-8">
+                <img src="${image}" alt="job image" class="p-4 mx-auto">
                 <h2 class="text-center py-2 text-2xl font-bold">${name}</h2>
                 <p class="py-2"> ${description} </p>
                 <h3 class="text-xl font-bold">Benefits</h3>
