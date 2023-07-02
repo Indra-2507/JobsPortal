@@ -1,5 +1,5 @@
-# JobsPortal
-JobsPortal is the final proyect of the fourth unit of "Introduction to Front-end Develop" career.
+# Jobs Portal
+Jobs portal is the final proyect of the fourth unit of "Introduction to Front-end Develop" career.
 
 It was developed d with knowledges of HTML5 and concepts of JAVASCRIPT. Also, Tailwind CSS, a framework that enables agile development, based on utility classes that can be easily applied in code.
 
@@ -36,4 +36,4 @@ Also you can search a job by diferents filters that will help you to find the jo
 Finals considerations
 ⚠ WARNING! For the best experience when using this program, we recommend that you use Google Chrome ⚠
 
-JosbsPortal is designed so that it can be used in the simplest and most efficient way for the user, with each section detailed and easy to use, so you can apreciate the jobs and choose the beter for you.
+Josbs portal is designed so that it can be used in the simplest and most efficient way for the user, with each section detailed and easy to use, so you can apreciate the jobs and choose the beter for you.
