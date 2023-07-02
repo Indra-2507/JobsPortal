@@ -52,7 +52,7 @@ $(SEL.formNewJob).addEventListener(SEL.submit, (e)=>{
         }, 1500)
         Utils.showElement(SEL.succesfullAlert)
         } else {
-            validateForm()
+            Functions.validateForm()
             const jobId = $(SEL.editForm).getAttribute("data-id")
             Methods.editJob(jobId)
             Utils.hideElement(SEL.formNewJob) 
