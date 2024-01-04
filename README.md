@@ -3,7 +3,7 @@ Jobs portal is the final proyect of the fourth unit of "Introduction to Front-en
 
 It was developed d with knowledges of HTML5 and concepts of JAVASCRIPT. Also, Tailwind CSS, a framework that enables agile development, based on utility classes that can be easily applied in code.
 
-You can visit the site through  this [link](https://indra-2507.github.io/JobsPortal/).
+You can visit the site through  this [link](https://github.com/Indra-2507/JobsPortal.git).
 
 ## How to use
 JobsPortals is the tool to show the available jobs of your company and get them to reach more people.
